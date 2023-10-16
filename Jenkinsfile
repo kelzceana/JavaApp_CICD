@@ -10,29 +10,29 @@ library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
 pipeline {   
   agent any
   tools {
-      maven 'Maven'
+    maven 'Maven'
   }
   environment {
-      IMAGE_NAME = 'nanatwn/demo-app:java-maven-2.0'
+    IMAGE_NAME = 'nanatwn/demo-app:java-maven-2.0'
   }
   stages {
     stage("build app") {
-        steps {
-            script {
-                echo 'building application jar...'
-                buildJar()
-            }
+      steps {
+        script {
+          echo 'building application jar...'
+          buildJar()
         }
+      }
     }
     stage("build image") {
-        steps {
-            script {
-                echo 'building docker image...'
-                buildImage(env.IMAGE_NAME)
-                dockerLogin()
-                dockerPush(env.IMAGE_NAME)
-            }
+      steps {
+        script {
+          echo 'building docker image...'
+          buildImage(env.IMAGE_NAME)
+          dockerLogin()
+          dockerPush(env.IMAGE_NAME)
         }
+      }
     }
     stage("deploy") {
       steps {
